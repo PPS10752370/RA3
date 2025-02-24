@@ -5,19 +5,17 @@ Este documento detalla los cambios realizados para mejorar la seguridad en un se
 ## Cambios realizados
 
 ### 1. Deshabilitación de AutoIndex
-![Deshabilitación de AutoIndex](assets/1%20-%20Disable%20Autoindex.png)
-
 Se ha deshabilitado el módulo `autoindex` para evitar la exposición accidental de archivos en directorios sin un `index.html`.
 
 ```bash
 a2dismod autoindex
 ```
 
+![Deshabilitación de AutoIndex](assets/1%20-%20Disable%20Autoindex.png)
+
 ---
 
 ### 2. Configuración de Content Security Policy (CSP)
-![Configuración CSP](assets/2%20-%20CSP.png)
-
 Se ha añadido una política CSP en la configuración de Apache para restringir el origen de los recursos cargados en la página.
 
 ```bash
@@ -26,16 +24,17 @@ Se ha añadido una política CSP en la configuración de Apache para restringir 
 </IfModule>
 ```
 
+![Configuración CSP](assets/2%20-%20CSP.png)
+
 ---
 
 ### 3. Configuración de VirtualHost
-![Configuración VirtualHost](assets/3%20-%20000-default.conf.png)
 
 Se han configurado los virtual hosts en Apache para redirigir el tráfico HTTP a HTTPS y definir la configuración SSL.
 
 Archivo: `sites-available/000-default.conf`
 
-```bash
+```apache
 <VirtualHost *:80>
     ServerName www.midominioseguro.com
     Redirect / https://www.midominioseguro.com/
@@ -52,16 +51,18 @@ Archivo: `sites-available/000-default.conf`
 </VirtualHost>
 ```
 
+![Configuración VirtualHost](assets/3%20-%20000-default.conf.png)
+
 ---
 
 ### 4. Verificación de Configuración
-![Prueba de configuración](assets/4%20-%20Test.png)
-
 Se ha utilizado `curl` para verificar los encabezados HTTP y confirmar que las políticas se están aplicando correctamente.
 
 ```bash
 curl -I https://localhost --insecure
 ```
+
+![Prueba de configuración](assets/4%20-%20Test.png)
 
 ---
 
@@ -70,5 +71,3 @@ curl -I https://localhost --insecure
 Se ha configurado una imagen de Docker con todas estas configuraciones aplicadas. Puedes encontrarla en el siguiente enlace:
 
 [Repositorio Docker - Apache Hardened:v2](https://hub.docker.com/layers/pps10752370/apache-hardened/v1/images/sha256-3160ffed4e77ecdc547e342f2d027efae57204579c5ddf404820706ed7eb98a3)
-
----
