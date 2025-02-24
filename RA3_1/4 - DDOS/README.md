@@ -34,13 +34,6 @@ En esta práctica se configura **mod_evasive**, un módulo de Apache diseñado p
    sudo chmod 777 /var/log/mod_evasive
    ```
 
-5. **Habilitar el módulo y reiniciar Apache**:
-   
-   ```bash
-   sudo a2enmod evasive
-   sudo systemctl restart apache2
-   ```
-
 **Captura de pantalla de la configuración:**
 
 ![Configuración de mod_evasive](assets/1%20-%20evasive.png)
