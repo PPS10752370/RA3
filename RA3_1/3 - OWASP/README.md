@@ -97,4 +97,4 @@ curl -k "https://www.midominioseguro.com/?exec=/bin/bash"
 
 Se ha configurado una imagen de Docker con todas estas configuraciones aplicadas. Puedes encontrarla en el siguiente enlace:
 
-[Repositorio Docker - Apache Hardened](https://hub.docker.com/layers/pps10752370/apache-hardened/v3/images/sha256-8fcf1cefff6ac1f5e696f797a63a7de59bfc2ea31e36b89d80b50e52a92cf46d)
+[Repositorio Docker - Apache Hardened:v3](https://hub.docker.com/layers/pps10752370/apache-hardened/v3/images/sha256-8fcf1cefff6ac1f5e696f797a63a7de59bfc2ea31e36b89d80b50e52a92cf46d)
