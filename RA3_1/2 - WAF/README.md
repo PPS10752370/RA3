@@ -47,5 +47,3 @@ Entrada maliciosa simulada:
 ```
 
 Al enviar esta solicitud, el servidor respondió con un **error 403 Forbidden**, lo que indica que ModSecurity bloqueó el intento de ataque.
-
----
