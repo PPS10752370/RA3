@@ -1,5 +1,7 @@
 # Apache Security Hardening - Práctica 1 : HSTS, Certificados Autofirmados y CSP.
 
+Este documento detalla los cambios realizados para mejorar la seguridad en un servidor Apache, incluyendo la desactivación del listado de directorios, la implementación de Content Security Policy (CSP), la configuración de VirtualHost con HTTPS y la verificación de las configuraciones aplicadas.
+
 ## Cambios realizados
 
 ### 1. Deshabilitación de AutoIndex
@@ -27,7 +29,7 @@ Se ha añadido una política CSP en la configuración de Apache para restringir 
 
 Se han configurado los virtual hosts en Apache para redirigir el tráfico HTTP a HTTPS y definir la configuración SSL.
 
-Archivo: sites-available/000-default.conf
+Archivo: `sites-available/000-default.conf`
 
 ```bash
 <VirtualHost *:80>
@@ -49,7 +51,7 @@ Archivo: sites-available/000-default.conf
 ### 4. Verificación de Configuración
 ![Prueba de configuración](assets/4%20-%20Test.png)
 
-Se ha utilizado curl para verificar los encabezados HTTP y confirmar que las políticas se están aplicando correctamente.
+Se ha utilizado `curl` para verificar los encabezados HTTP y confirmar que las políticas se están aplicando correctamente.
 
 ```bash
 curl -I https://localhost --insecure
