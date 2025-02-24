@@ -1,92 +1,117 @@
 # Apache Security Hardening - Práctica 3: OWASP
 
-Este documento detalla la configuración y uso de las **Reglas Núcleo de OWASP (OWASP Core Rule Set - CRS)** en ModSecurity para proteger aplicaciones web contra vulnerabilidades comunes como **inyección SQL (SQLi)**, **Cross-Site Scripting (XSS)** y **ejecución remota de código (RCE)**.
+Este documento detalla la instalación y configuración de las **Reglas Núcleo de OWASP (OWASP Core Rule Set - CRS)** en ModSecurity para fortalecer la seguridad en aplicaciones web y mitigar ataques como **inyección SQL (SQLi)**, **Cross-Site Scripting (XSS)** y **ejecución remota de código (RCE)**.
 
-## Cambios realizados
+## Instalación de OWASP CRS
 
-### 1. Instalación y Configuración de OWASP CRS
+Para mejorar la seguridad del servidor web Apache, instalaremos y configuraremos el **OWASP Core Rule Set (CRS)**, un conjunto de reglas predefinidas que protegen contra ataques web comunes.
 
-Las **OWASP Core Rule Set (CRS)** son un conjunto de reglas de ModSecurity diseñadas para detectar y prevenir ataques web. Para instalarlas en Apache:
-
-1. Descargar y extraer las reglas de OWASP CRS:
+1. **Instalar ModSecurity**:
    ```bash
-   cd /etc/modsecurity/
-   git clone https://github.com/coreruleset/coreruleset.git
-   mv coreruleset /etc/modsecurity/crs
+   sudo apt install libapache2-mod-security2 -y
    ```
 
-2. Copiar el archivo de configuración predeterminado:
+2. **Clonar el repositorio oficial de OWASP CRS**:
    ```bash
-   cp /etc/modsecurity/crs/crs-setup.conf.example /etc/modsecurity/crs/crs-setup.conf
+   git clone https://github.com/SpiderLabs/owasp-modsecurity-crs.git
    ```
 
-3. Incluir las reglas en la configuración de ModSecurity (`/etc/apache2/mods-enabled/security2.conf`):
+3. **Mover el archivo de configuración**:
+   ```bash
+   cd owasp-modsecurity-crs
+   sudo mv crs-setup.conf.example /etc/modsecurity/crs-setup.conf
+   ```
+
+4. **Mover las reglas al directorio de ModSecurity**:
+   ```bash
+   sudo mv rules/ /etc/modsecurity/
+   ```
+   Si hay errores, crear manualmente el directorio y copiar las reglas:
+   ```bash
+   sudo mkdir /etc/modsecurity/rules
+   cd rules
+   sudo cp *.* /etc/modsecurity/rules
+   ```
+
+5. **Verificar la configuración en Apache**:
+   ```bash
+   sudo nano /etc/apache2/mods-enabled/security2.conf
+   ```
+   Asegurar que se incluyan las reglas:
    ```apache
-   IncludeOptional /etc/modsecurity/crs/crs-setup.conf
-   IncludeOptional /etc/modsecurity/crs/rules/*.conf
+   <IfModule security2_module>
+       SecDataDir /var/cache/modsecurity
+       SecRuleEngine On
+       IncludeOptional /etc/modsecurity/*.conf
+       Include /etc/modsecurity/rules/*.conf
+   </IfModule>
    ```
 
-4. Reiniciar Apache para aplicar los cambios:
+6. **Reiniciar Apache para aplicar los cambios**:
    ```bash
-   systemctl restart apache2
+   sudo systemctl restart apache2
    ```
+
+**Captura de pantalla:**
+![Configuración de security2.conf](assets/1%20-%20security2.conf.png)
 
 ---
 
-### 2. Configuración en VirtualHost
+## Configuración en VirtualHost
 
-Para asegurarnos de que ModSecurity con OWASP CRS está activo en los sitios configurados en Apache, agregamos lo siguiente en la configuración del VirtualHost (`/etc/apache2/sites-available/000-default.conf`):
+Para garantizar que ModSecurity con OWASP CRS esté activo en los sitios configurados en Apache, agregamos lo siguiente en el archivo del VirtualHost (`/etc/apache2/sites-available/000-default.conf`):
 
 ```apache
 <IfModule security2_module>
     SecRuleEngine On
-    SecDefaultAction "phase:1,log,auditlog,pass"
+    SecRule ARGS:testparam "@contains test" "id:1234,deny,status:403,msg:'Cazado por Ciberseguridad'"
 </IfModule>
 ```
 
-Esto habilita ModSecurity con CRS en modo **detección y auditoría**, registrando eventos en los logs sin bloquear el tráfico inmediatamente.
+Esto permitirá bloquear peticiones que contengan el parámetro `testparam=test`, simulando una regla personalizada de detección de ataques.
+
+**Captura de pantalla:**
+![Habilitación en VirtualHost](assets/2%20-%20Enable%20in%20000-default.conf.png)
 
 ---
 
-### 3. Prueba de Configuración: Simulación de Ataques SQLi y XSS
+## Pruebas de Seguridad
 
-Para verificar el funcionamiento de las reglas de OWASP CRS, realizamos pruebas enviando peticiones maliciosas al servidor.
+Para verificar el funcionamiento de OWASP CRS, realizamos pruebas enviando peticiones maliciosas al servidor.
 
-#### Prueba de inyección SQL (SQLi):
-
-Enviamos una consulta SQL maliciosa a la URL `https://www.midominioseguro.com/login.php`:
-
+#### 1. **Prueba de bloqueo con regla personalizada**:
 ```bash
-curl -X POST -d "username=admin' OR '1'='1" https://www.midominioseguro.com/login.php
+curl localhost:8080/index.html?testparam=test
 ```
+**Resultado esperado:** Código **403 Forbidden**.
 
-**Resultado esperado:** Bloqueo de la solicitud con un código **403 Forbidden**.
-
-#### Prueba de ataque XSS:
-
+#### 2. **Prueba de inyección de comandos (Command Injection)**:
 ```bash
-curl -X POST -d "<script>alert('XSS')</script>" https://www.midominioseguro.com/post.php
+curl -k "https://www.midominioseguro.com/?exec=/bin/bash"
 ```
+**Resultado esperado:** Bloqueo con mensaje **403 Forbidden**.
 
-**Resultado esperado:** Bloqueo del intento de inyección de script.
+**Captura de pantalla del bloqueo:**
+![Prueba de seguridad](assets/3%20-%20Test.png)
 
 ---
 
-### 4. Análisis de Logs
+## Análisis de Logs
 
-Para verificar los intentos de ataque detectados por OWASP CRS, podemos revisar los registros de ModSecurity:
-
+Para revisar los intentos de ataque detectados por OWASP CRS:
 ```bash
-cat /var/log/apache2/modsec_audit.log | grep "Warning"
+sudo tail /var/log/apache2/error.log
 ```
-
-Esto mostrará las solicitudes bloqueadas y los detalles de cada ataque detectado.
+Ejemplo de entrada en el log:
+```plaintext
+[Tue Mar 23 14:05:41.485707 2021] [:error] [pid 2128] [client ::1:43736] [client ::1] ModSecurity: Warning. Operator GE matched 5 at TX:inbound_anomaly_score. [file "/etc/modsecurity/rules/RESPONSE-980-CORRELATION.conf"] [line "91"] [id "980130"] [msg "Inbound Anomaly Score Exceeded (Total Inbound Score: 5 - SQLI=0,XSS=0,RFI=0,LFI=0,RCE=5,PHPI=0,HTTP=0,SESS=0): individual paranoia level scores: 5, 0, 0, 0"] [ver "OWASP_CRS/3.2.0"] [tag "event-correlation"] [hostname "localhost"] [uri "/index.html"] [unique_id "YFot9ZcilX713-zarJTg4wAAAAQ"]
+```
 
 ---
 
 ## Conclusión
 
-La integración de las **OWASP Core Rule Set** en ModSecurity añade una capa avanzada de protección contra ataques web, permitiendo detectar y bloquear amenazas como SQLi y XSS. Esta práctica demuestra cómo instalar, configurar y probar estas reglas en un entorno Apache.
+La integración de las **OWASP Core Rule Set** en ModSecurity mejora significativamente la seguridad del servidor Apache al detectar y bloquear ataques como SQLi, XSS y command injection. Esta práctica demuestra cómo instalar, configurar y probar estas reglas en un entorno seguro.
 
 ## Autor
 Configuración realizada por [Tu Nombre].
