@@ -47,14 +47,15 @@ Para mejorar la seguridad del servidor web Apache, instalaremos y configuraremos
    </IfModule>
    ```
 
+
+   **Captura de pantalla:**
+
+   ![Configuración de security2.conf](assets/1%20-%20security2.conf.png)
+
 6. **Reiniciar Apache para aplicar los cambios**:
    ```bash
    sudo systemctl restart apache2
    ```
-
-**Captura de pantalla:**
-
-![Configuración de security2.conf](assets/1%20-%20security2.conf.png)
 
 ---
 
@@ -80,10 +81,12 @@ Esto permitirá bloquear peticiones que contengan el parámetro `testparam=test`
 
 Para verificar el funcionamiento de OWASP CRS, realizamos pruebas enviando peticiones maliciosas al servidor.
 
-![Prueba de seguridad](assets/3%20-%20Test.png)
-
 ```bash
 curl -k "https://www.midominioseguro.com/?exec=/bin/bash"
 ```
+
+![Prueba de seguridad](assets/3%20-%20Test.png)
+
+
 
 **Resultado esperado:** Bloqueo con mensaje **403 Forbidden**.
