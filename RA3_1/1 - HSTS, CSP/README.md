@@ -13,6 +13,8 @@ Se ha deshabilitado el módulo `autoindex` para evitar la exposición accidental
 a2dismod autoindex
 ```
 
+---
+
 ### 2. Configuración de Content Security Policy (CSP)
 ![Configuración CSP](assets/2%20-%20CSP.png)
 
@@ -23,6 +25,8 @@ Se ha añadido una política CSP en la configuración de Apache para restringir 
     Header set Content-Security-Policy "default-src 'self'; script-src 'self'"
 </IfModule>
 ```
+
+---
 
 ### 3. Configuración de VirtualHost
 ![Configuración VirtualHost](assets/3%20-%20000-default.conf.png)
@@ -47,6 +51,8 @@ Archivo: `sites-available/000-default.conf`
     Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains"
 </VirtualHost>
 ```
+
+---
 
 ### 4. Verificación de Configuración
 ![Prueba de configuración](assets/4%20-%20Test.png)
