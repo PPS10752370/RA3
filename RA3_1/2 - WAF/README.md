@@ -32,9 +32,11 @@ Esto permite que ModSecurity monitoree y filtre las solicitudes en el servidor.
 
 ### 3. Prueba de Configuración: Bloqueo de Ataques XSS
 **Captura de pantalla del intento de ataque:**
+
 ![Prueba de XSS](assets/3%20-%20Test.png)
 
 **Captura de pantalla del bloqueo:**
+
 ![Respuesta 403 Forbidden](assets/4%20-%20Test.png)
 
 Se realizó una prueba enviando una inyección de código JavaScript en un formulario web en `https://www.midominioseguro.com/post.php`.
