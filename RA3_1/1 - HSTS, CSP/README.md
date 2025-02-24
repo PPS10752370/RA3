@@ -62,3 +62,13 @@ Se ha utilizado `curl` para verificar los encabezados HTTP y confirmar que las p
 ```bash
 curl -I https://localhost --insecure
 ```
+
+---
+
+## Repositorio de Docker
+
+Se ha configurado una imagen de Docker con todas estas configuraciones aplicadas. Puedes encontrarla en el siguiente enlace:
+
+[Repositorio Docker - Apache Hardened:v2](https://hub.docker.com/layers/pps10752370/apache-hardened/v2/images/sha256-c405540053e0022ed0cd2f96f46ae674cc58f4c8aff6c3a4f8cfa4dc93ee5bb6)
+
+---
