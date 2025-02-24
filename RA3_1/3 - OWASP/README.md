@@ -53,6 +53,7 @@ Para mejorar la seguridad del servidor web Apache, instalaremos y configuraremos
    ```
 
 **Captura de pantalla:**
+
 ![Configuración de security2.conf](assets/1%20-%20security2.conf.png)
 
 ---
@@ -75,21 +76,14 @@ Esto permitirá bloquear peticiones que contengan el parámetro `testparam=test`
 
 ---
 
-## Pruebas de Seguridad
+## Prueba de inyección de comandos (Command Injection)
 
 Para verificar el funcionamiento de OWASP CRS, realizamos pruebas enviando peticiones maliciosas al servidor.
 
-#### 1. **Prueba de bloqueo con regla personalizada**:
-
-```bash
-curl localhost:8080/index.html?testparam=test
-```
-**Resultado esperado:** Código **403 Forbidden**.
-
-#### 2. **Prueba de inyección de comandos (Command Injection)**:
 ![Prueba de seguridad](assets/3%20-%20Test.png)
 
 ```bash
 curl -k "https://www.midominioseguro.com/?exec=/bin/bash"
 ```
+
 **Resultado esperado:** Bloqueo con mensaje **403 Forbidden**.
