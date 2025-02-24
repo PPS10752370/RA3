@@ -80,39 +80,16 @@ Esto permitirá bloquear peticiones que contengan el parámetro `testparam=test`
 Para verificar el funcionamiento de OWASP CRS, realizamos pruebas enviando peticiones maliciosas al servidor.
 
 #### 1. **Prueba de bloqueo con regla personalizada**:
+
 ```bash
 curl localhost:8080/index.html?testparam=test
 ```
 **Resultado esperado:** Código **403 Forbidden**.
 
 #### 2. **Prueba de inyección de comandos (Command Injection)**:
+![Prueba de seguridad](assets/3%20-%20Test.png)
+
 ```bash
 curl -k "https://www.midominioseguro.com/?exec=/bin/bash"
 ```
 **Resultado esperado:** Bloqueo con mensaje **403 Forbidden**.
-
-**Captura de pantalla del bloqueo:**
-![Prueba de seguridad](assets/3%20-%20Test.png)
-
----
-
-## Análisis de Logs
-
-Para revisar los intentos de ataque detectados por OWASP CRS:
-```bash
-sudo tail /var/log/apache2/error.log
-```
-Ejemplo de entrada en el log:
-```plaintext
-[Tue Mar 23 14:05:41.485707 2021] [:error] [pid 2128] [client ::1:43736] [client ::1] ModSecurity: Warning. Operator GE matched 5 at TX:inbound_anomaly_score. [file "/etc/modsecurity/rules/RESPONSE-980-CORRELATION.conf"] [line "91"] [id "980130"] [msg "Inbound Anomaly Score Exceeded (Total Inbound Score: 5 - SQLI=0,XSS=0,RFI=0,LFI=0,RCE=5,PHPI=0,HTTP=0,SESS=0): individual paranoia level scores: 5, 0, 0, 0"] [ver "OWASP_CRS/3.2.0"] [tag "event-correlation"] [hostname "localhost"] [uri "/index.html"] [unique_id "YFot9ZcilX713-zarJTg4wAAAAQ"]
-```
-
----
-
-## Conclusión
-
-La integración de las **OWASP Core Rule Set** en ModSecurity mejora significativamente la seguridad del servidor Apache al detectar y bloquear ataques como SQLi, XSS y command injection. Esta práctica demuestra cómo instalar, configurar y probar estas reglas en un entorno seguro.
-
-## Autor
-Configuración realizada por [Tu Nombre].
-
