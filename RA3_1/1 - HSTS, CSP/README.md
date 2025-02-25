@@ -70,4 +70,4 @@ curl -I https://localhost --insecure
 
 Se ha configurado una imagen de Docker con todas estas configuraciones aplicadas. Puedes encontrarla en el siguiente enlace:
 
-[Repositorio Docker - Apache Hardened:v2](https://hub.docker.com/layers/pps10752370/apache-hardened/v1/images/sha256-3160ffed4e77ecdc547e342f2d027efae57204579c5ddf404820706ed7eb98a3)
+[Repositorio Docker - Apache Hardened:v1](https://hub.docker.com/layers/pps10752370/apache-hardened/v1/images/sha256-3160ffed4e77ecdc547e342f2d027efae57204579c5ddf404820706ed7eb98a3)
