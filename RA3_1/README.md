@@ -1,12 +1,12 @@
 # RA3_1
 
-## Introduction [INTRO](URL_TASKS):
+## Introducción [INTRO](URL_TASKS):
 
 Este repositorio contiene una serie de prácticas enfocadas en la seguridad de servidores web Apache y Nginx, abordando medidas de protección clave como CSP, firewalls de aplicaciones web y mitigación de ataques DDoS.
 
 ---
 
-## Tasks
+## Tareas
 
 * [Práctica 1: CSP](#URL_TASK_1): Implementación de Content Security Policy para mitigar ataques XSS.
 * [Práctica 2: Web Application Firewall](#URL_TASK_2): Configuración de ModSecurity como WAF en Apache.
