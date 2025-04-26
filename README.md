@@ -29,7 +29,45 @@ Includes the following:
 │   │   │   └── README.md
 │   │   └── README.md
 │   ├── RA3_2
-│   │   ├── asset
+│   │   ├── 1.-Brute_Force
+│   │   │   ├── asset
+│   │   │   └── README.md
+│   │   ├── 2.-Command_Injection
+│   │   │   ├── asset
+│   │   │   └── README.md
+│   │   ├── 3.-CSRF
+│   │   │   ├── asset
+│   │   │   └── README.md
+│   │   ├── 4.-File_Inclusion
+│   │   │   ├── asset
+│   │   │   └── README.md
+│   │   ├── 5.-File_Upload
+│   │   │   ├── asset
+│   │   │   └── README.md
+│   │   ├── 6.-SQL_Injection
+│   │   │   ├── asset
+│   │   │   └── README.md
+│   │   ├── 7.-SQL_Injection_Blind
+│   │   │   ├── asset
+│   │   │   └── README.md
+│   │   ├── 8.-Weak_Session_ID
+│   │   │   ├── asset
+│   │   │   └── README.md
+│   │   ├── 9.-XSS_Dom
+│   │   │   ├── asset
+│   │   │   └── README.md
+│   │   ├── 10.-XSS_Reflected
+│   │   │   ├── asset
+│   │   │   └── README.md
+│   │   ├── 11.-XSS_Stored
+│   │   │   ├── asset
+│   │   │   └── README.md
+│   │   ├── 12.-CSP_Bypass
+│   │   │   ├── asset
+│   │   │   └── README.md
+│   │   ├── 13.-JavaScript
+│   │   │   ├── asset
+│   │   │   └── README.md
 │   │   └── README.md
 │   ├── RA3_3
 │   │   ├── asset
