@@ -6,7 +6,7 @@ Esta vulnerabilidad consiste en una **inyección de comandos**, donde el backend
 
 Aprovechamos esta debilidad para ejecutar comandos arbitrarios en el servidor.
 
-![Command Injection - Payload](assets/command_injection_ls.png)
+![Command Injection - Payload](assets/command_injection_low.png)
 
 ## Payload utilizado
 
