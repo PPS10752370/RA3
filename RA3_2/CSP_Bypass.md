@@ -32,7 +32,7 @@ Este script externo contiene un `alert(document.cookie)` y al ser cargado desde 
 
 En este nivel, la política CSP utiliza un **nonce (número único de un solo uso)** para permitir la ejecución de scripts. En teoría, esto debería impedir que el atacante ejecute scripts arbitrarios, ya que cada script debe incluir el atributo `nonce` con el valor correcto.
 
-![CSP Bypass - Medium](assets/CSP_bypass_medium.png)
+![CSP Bypass - Medium](assets/csp_bypass_medium.png)
 
 Sin embargo, DVWA utiliza un nonce estático que **no cambia entre peticiones**, por lo que puede ser reutilizado fácilmente.
 
